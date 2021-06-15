@@ -1,0 +1,120 @@
+[94m[1mFeature:[22m[39m [94m[4mGet User[24m[39m [2m# features/GetUser.feature:1[22m
+
+  [90mIn order to keep Regres api stable[39m
+  [90mAs a tester[39m
+  [90mI want to make sure that everything works as expected[39m
+
+  [36m[1mScenario:[22m[39m [36m[4mGet A User[24m[39m [2m# features/GetUser.feature:7[22m
+    [36mGiven[39m I make a GET request to /api/users/1
+    [36mWhen[39m I receive a response
+    [36mThen[39m I expect response should have a status 200
+    [36mAnd[39m I expect response should have a json at data
+      [90m"""[39m
+      [90m[3m{[23m[39m
+      [90m[3m  "id":1,[23m[39m
+      [90m[3m  "email":"george.bluth@reqres.in",[23m[39m
+      [90m[3m  "first_name":"George",[23m[39m
+      [90m[3m  "last_name":"Bluth",[23m[39m
+      [90m[3m  "avatar":"https://reqres.in/img/faces/1-image.jpg"[23m[39m
+      [90m[3m}[23m[39m
+      [90m"""[39m
+    [36mAnd[39m I expect response should have a json like
+      [90m"""[39m
+      [90m[3m{[23m[39m
+      [90m[3m  "data": {[23m[39m
+      [90m[3m    "id": 1,[23m[39m
+      [90m[3m    "first_name": "George"[23m[39m
+      [90m[3m  }[23m[39m
+      [90m[3m}[23m[39m
+      [90m"""[39m
+
+  [36m[1mScenario:[22m[39m [36m[4mUser not found[24m[39m [2m# features/GetUser.feature:31[22m
+    [36mGiven[39m I make a GET request to /api/users/23
+    [36mWhen[39m I receive a response
+    [36mThen[39m I expect response should have a status 404
+
+  [36m[1mScenario:[22m[39m [36m[4mList Users[24m[39m [2m# features/GetUser.feature:36[22m
+    [36mGiven[39m I make a GET request to /api/users
+    [36mAnd[39m I set query param page to 2
+    [36mWhen[39m I receive a response
+    [36mThen[39m I expect response should have a status 200
+    [36mAnd[39m I expect response should have a json like
+      [90m"""[39m
+      [90m[3m{[23m[39m
+      [90m[3m  "page": 2[23m[39m
+      [90m[3m}[23m[39m
+      [90m"""[39m
+    [36mAnd[39m I expect response should have a json schema
+      [90m"""[39m
+      [90m[3m{[23m[39m
+      [90m[3m  "type": "object",[23m[39m
+      [90m[3m  "properties": {[23m[39m
+      [90m[3m    "page": {[23m[39m
+      [90m[3m      "type": "number"[23m[39m
+      [90m[3m    }[23m[39m
+      [90m[3m  }[23m[39m
+      [90m[3m}[23m[39m
+      [90m"""[39m
+    [36mAnd[39m I store response at data[0].id as UserId
+
+  [36m[1mScenario:[22m[39m [36m[4mGet A User With Id[24m[39m [2m# features/GetUser.feature:60[22m
+    [36mGiven[39m I make a GET request to /api/users/{id}
+    [36mAnd[39m I set path param id to $S{UserId}
+    [36mWhen[39m I receive a response
+    [36mThen[39m I expect response should have a status 200
+    [36mAnd[39m I expect response header content-type should have application/json; charset=utf-8
+    [36mAnd[39m I expect response should have a json like
+      [90m"""[39m
+      [90m[3m{[23m[39m
+      [90m[3m  "data": {[23m[39m
+      [90m[3m    "id": 7[23m[39m
+      [90m[3m  }[23m[39m
+      [90m[3m}[23m[39m
+      [90m"""[39m
+
+[94m[1mFeature:[22m[39m [94m[4mLogin[24m[39m [2m# features/Login.feature:1[22m
+
+  [90mIn order to keep Regres api stable[39m
+  [90mAs a tester[39m
+  [90mI want to make sure that everything works as expected[39m
+
+  [36m[1mScenario:[22m[39m [36m[4mLogin Sucess[24m[39m [2m# features/Login.feature:7[22m
+    [36mGiven[39m I make a POST request to /api/login
+    [36mAnd[39m I set body to
+      [90m"""[39m
+      [90m[3m  {[23m[39m
+      [90m[3m     "email": "eve.holt@reqres.in",[23m[39m
+      [90m[3m      "password": "cityslicka"[23m[39m
+      [90m[3m  }[23m[39m
+      [90m"""[39m
+    [36mWhen[39m I receive a response
+    [36mWhen[39m I receive a response
+    [36mThen[39m I expect response should have a status 200
+    [36mAnd[39m I expect response should have a json like
+      [90m"""[39m
+      [90m[3m {[23m[39m
+      [90m[3m    "token": "QpwL5tke4Pnpja7X4"[23m[39m
+      [90m[3m}[23m[39m
+      [90m"""[39m
+
+  [36m[1mScenario:[22m[39m [36m[4mLogin Error[24m[39m [2m# features/Login.feature:28[22m
+    [36mGiven[39m I make a POST request to /api/login
+    [36mAnd[39m I set body to
+      [90m"""[39m
+      [90m[3m  {[23m[39m
+      [90m[3m     "email": "eve.holt@reqres.in"[23m[39m
+      [90m[3m  }[23m[39m
+      [90m"""[39m
+    [36mWhen[39m I receive a response
+    [36mWhen[39m I receive a response
+    [36mThen[39m I expect response should have a status 400
+    [36mAnd[39m I expect response should have a json like
+      [90m"""[39m
+      [90m[3m {[23m[39m
+      [90m[3m        "error": "Missing password"[23m[39m
+      [90m[3m}[23m[39m
+      [90m"""[39m
+
+6 scenarios ([32m6 passed[39m)
+33 steps ([32m33 passed[39m)
+0m03.288s (executing steps: 0m03.241s)

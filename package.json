@@ -1,0 +1,30 @@
+{
+  "name": "pactum-cucumber-boilerplate",
+  "version": "1.0.0",
+  "description": "Boilerplate project to run REST API tests with Cucumber &amp; Pactum",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js                          -f @cucumber/pretty-formatter",
+    "pretty": "cucumber-js -f @cucumber/pretty-formatter",
+    "test:login": "cucumber-js features/Login.feature   -f json:output/LoginTest.json",
+    "test:user": "cucumber-js features/GetUser.feature -f json:output/UserTest.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pactumjs/pactum-cucumber-boilerplate.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pactumjs/pactum-cucumber-boilerplate/issues"
+  },
+  "homepage": "https://github.com/pactumjs/pactum-cucumber-boilerplate#readme",
+  "dependencies": {
+    "@cucumber/cucumber": "^7.0.0",
+    "@cucumber/pretty-formatter": "^1.0.0-alpha.0",
+    "cucumber-pretty": "6",
+    "dotenv": "^10.0.0",
+    "pactum": "^3.0.12"
+  }
+}
